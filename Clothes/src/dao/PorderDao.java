@@ -5,17 +5,17 @@ import java.util.List;
 import model.Porder;
 
 public interface PorderDao {
-	//create-->void
+	//create
 	void add(Porder porder);
 	
-	//read-->List
+	//read
 	List<Porder> selectAll();
 	List<Porder> selectById(int id);
 	
-	//update-->void
+	//update
 	void update(Porder porder);
 	
-	//delete-->void
+	//delete
 	void delete(int id);
 
 }

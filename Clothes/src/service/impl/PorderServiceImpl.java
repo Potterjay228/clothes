@@ -9,6 +9,8 @@ import service.PorderService;
 public class PorderServiceImpl implements PorderService  {
 
 	public static void main(String[] args) {
+		
+		System.out.println();
 
 	}
 	
@@ -53,10 +55,7 @@ public class PorderServiceImpl implements PorderService  {
 
 	@Override
 	public Porder findById(int id) {
-		/*
-		 * 1.id>=0
-		 * 2.Porder無訂單--->null
-		 */
+		
 		Porder porder=null;
 		if(id>0)
 		{

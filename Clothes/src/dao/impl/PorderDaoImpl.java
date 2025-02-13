@@ -14,9 +14,7 @@ import util.DbConnection;
 public class PorderDaoImpl implements PorderDao {
 
 	public static void main(String[] args) {
-		
-		Porder porder=new Porder("qwe",2,3,5);
-		new PorderDaoImpl().add(porder);
+				
 
 	}
 	

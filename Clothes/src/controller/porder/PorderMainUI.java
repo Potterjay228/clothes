@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.member.LoginUI;
 import model.Member;
+import service.impl.PorderServiceImpl;
 import util.Tool;
 
 import java.awt.Color;
@@ -27,6 +28,8 @@ public class PorderMainUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Member member=(Member)Tool.read("member.txt");
+	
+	private static PorderServiceImpl porderserviceimpl=new PorderServiceImpl();
 
 	/**
 	 * Launch the application.
@@ -68,6 +71,13 @@ public class PorderMainUI extends JFrame {
 		lblNewLabel.setBounds(136, 21, 159, 26);
 		panel.add(lblNewLabel);
 		
+		JLabel clock = new JLabel("2025-02-13 10:59:23");
+		clock.setFont(new Font("新細明體", Font.BOLD, 14));
+		clock.setBounds(287, 38, 129, 19);
+		panel.add(clock);		
+		Timer timer = new Timer(1000, e -> updateDateTime(clock));
+		timer.start();
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(250, 143, 168));
 		panel_1.setBounds(10, 74, 416, 269);
@@ -102,33 +112,41 @@ public class PorderMainUI extends JFrame {
 		btnNewButton_1.setBounds(144, 101, 109, 36);
 		panel_1.add(btnNewButton_1);
 		
-		JButton btnNewButton_1_1 = new JButton("登出");
+		JButton btnNewButton_1_1 = new JButton("離開");
 		btnNewButton_1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "您已成功登出");
-                
-                LoginUI loginUI=new LoginUI();
-                loginUI.setVisible(true);
-				dispose();
+				
+				System.exit(0);
+				
 			}
 		});
 		btnNewButton_1_1.setFont(new Font("新細明體", Font.BOLD, 16));
 		btnNewButton_1_1.setBounds(144, 160, 109, 36);
 		panel_1.add(btnNewButton_1_1);
 		
-		JLabel clock = new JLabel("2025-02-11 15:34:52");
-		clock.setFont(new Font("新細明體", Font.BOLD, 14));
-		clock.setBounds(270, 10, 138, 19);
-		panel_1.add(clock);
-		
-		Timer timer = new Timer(1000, e -> updateDateTime(clock));
-		
-		JLabel showMember = new JLabel(member.getName()+"您好,歡迎光臨葛來美服飾");
-		showMember.setFont(new Font("新細明體", Font.BOLD, 15));
-		showMember.setBounds(17, 10, 253, 23);
-		panel_1.add(showMember);
+		JLabel marqueeLabel = new JLabel(member.getName()+"您好! 訂購請選新增訂單,查詢修改請選管理訂單! ");
+		marqueeLabel.setFont(new Font("新細明體", Font.BOLD, 15));
+		marqueeLabel.setBounds(25, 10, 381, 23);
+		panel_1.add(marqueeLabel);
 		timer.start();
+		
+		Thread marqueeThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        String text = marqueeLabel.getText();
+                        marqueeLabel.setText(text.substring(1) + text.charAt(0));
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        marqueeThread.start();				
+		
 	}
 	private Object updateDateTime(JLabel clock) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

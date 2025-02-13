@@ -76,6 +76,13 @@ public class AddMemberUI extends JFrame {
 		lblNewLabel.setBounds(140, 18, 123, 29);
 		panel.add(lblNewLabel);
 		
+		JLabel clock = new JLabel("2025-02-13 11:23:12");
+		clock.setFont(new Font("新細明體", Font.BOLD, 14));
+		clock.setBounds(287, 40, 129, 19);
+		panel.add(clock);
+		Timer timer = new Timer(1000, e -> updateDateTime(clock));
+		timer.start();
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(250, 143, 168));
 		panel_1.setBounds(10, 79, 416, 264);
@@ -142,7 +149,7 @@ public class AddMemberUI extends JFrame {
 		mobile.setBounds(108, 169, 96, 21);
 		panel_1.add(mobile);
 		
-		JLabel lblNewLabel_3 = new JLabel("英文字母和數字,6至8字");
+		JLabel lblNewLabel_3 = new JLabel("英文+數字,6至8字");
 		lblNewLabel_3.setForeground(new Color(255, 255, 0));
 		lblNewLabel_3.setFont(new Font("新細明體", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(214, 52, 170, 15);
@@ -158,20 +165,18 @@ public class AddMemberUI extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				String Name=name.getText();
 				String Username=username.getText();
 				String Password=password.getText();
+				String Address=address.getText();
+				String Phone=phone.getText();
+				String Mobile=mobile.getText();
 				if(new MemberServiceImpl().isUsernameBeenUse(Username))
 				{
 					JOptionPane.showMessageDialog(null, "帳號重複註冊");
 				}
-				else if(isValidUsername(Username) && isValidPassword(Password)) {
-					
-					String Name=name.getText();										
-					String Address=address.getText();
-					String Phone=phone.getText();
-					String Mobile=mobile.getText();
-					
+				else if(isValidUsername(Username) && isValidPassword(Password) && isValidName(Name)) {
+		
 					Member member=new Member(Name,Username,Password,Address,Phone,Mobile);
 					
 					new MemberServiceImpl().addMember(member);
@@ -182,6 +187,7 @@ public class AddMemberUI extends JFrame {
                     loginUI.setVisible(true);
 					dispose();
                 } 
+				
 				else
 				{
 					JOptionPane.showMessageDialog(null, "請依照規則輸入帳號密碼");
@@ -206,36 +212,40 @@ public class AddMemberUI extends JFrame {
 		btnNewButton_1_1.setBounds(185, 213, 85, 27);
 		panel_1.add(btnNewButton_1_1);
 		
-		JLabel clock = new JLabel("2025-02-11 17:00:01");
-		clock.setFont(new Font("新細明體", Font.BOLD, 14));
-		clock.setBounds(268, 10, 138, 19);
-		panel_1.add(clock);
-		
-		Timer timer = new Timer(1000, e -> updateDateTime(clock));
+		JLabel lblNewLabel_4_1 = new JLabel("必填");
+		lblNewLabel_4_1.setForeground(Color.YELLOW);
+		lblNewLabel_4_1.setFont(new Font("新細明體", Font.BOLD, 13));
+		lblNewLabel_4_1.setBounds(214, 22, 38, 15);
+		panel_1.add(lblNewLabel_4_1);
 		timer.start();
 	}
 	
 	private Object updateDateTime(JLabel clock) {
-		
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String currentDateTime=sdf.format(new Date());
-			clock.setText(currentDateTime);
-			return null;
-		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentDateTime=sdf.format(new Date());
+		clock.setText(currentDateTime);
+		return null;
+	}
 	
 
 	private boolean isValidUsername(String Username) {
-        String regex = "^[a-zA-Z0-9]{6,8}$"; // 字符串长度大于5小于9，且只能包含字母和数字
+        String regex = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]{6,8}$"; 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(Username);
         return matcher.matches();
     }
-    
-    // 正则表达式验证密码
+       
     private boolean isValidPassword(String Password) {
-        String regex = "^[0-9]{7,9}$"; // 密码长度大于6小于10，且只能包含数字
+        String regex = "^[0-9]{7,9}$"; 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(Password);
+        return matcher.matches();
+    }
+    
+    private boolean isValidName(String Name) {
+    	String regex = "^(?!\\s*$).+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(Name);
         return matcher.matches();
     }
 

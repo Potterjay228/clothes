@@ -9,8 +9,8 @@ public interface MemberDao {
 	void add(Member member);
 	
 	//read
-	List<Member> selectAll();//select*from member
-	List<Member> selectUsernameAndPassword(String username,String password);//select * from member where username=? and password=?
+	List<Member> selectAll();
+	List<Member> selectUsernameAndPassword(String username,String password);
 	List<Member> selectById(int id);
 	List<Member> selectByUsername(String username);
 	

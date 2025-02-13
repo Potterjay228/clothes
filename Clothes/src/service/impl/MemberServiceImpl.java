@@ -10,7 +10,7 @@ public class MemberServiceImpl implements MemberService  {
 
 	public static void main(String[] args) {
 		
-		System.out.println(new MemberServiceImpl().isUsernameBeenUse("tttrrr"));
+		System.out.println();
 
 	}
 	

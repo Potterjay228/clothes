@@ -8,7 +8,7 @@ public interface PorderService {
 	//create
 	void addPorder(Porder porder);
 	
-	//read-->列印報表
+	//read
 	String AllPorder();
 	List<Porder> findAllPorder();
 	Porder findById(int id);

@@ -71,6 +71,13 @@ public class LoginUI extends JFrame {
 		lblNewLabel.setBounds(106, 27, 203, 26);
 		panel.add(lblNewLabel);
 		
+		JLabel clock = new JLabel("2025-02-13 11:13:30");
+		clock.setFont(new Font("新細明體", Font.BOLD, 14));
+		clock.setBounds(278, 56, 138, 19);
+		panel.add(clock);
+		Timer timer = new Timer(1000, e -> updateDateTime(clock));
+		timer.start();
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(250, 143, 168));
 		panel_1.setBounds(10, 95, 416, 248);
@@ -140,13 +147,6 @@ public class LoginUI extends JFrame {
 		btnNewButton_1.setFont(new Font("新細明體", Font.BOLD, 15));
 		btnNewButton_1.setBounds(187, 159, 85, 27);
 		panel_1.add(btnNewButton_1);
-		
-		JLabel clock = new JLabel("2025-02-11 15:33:26");
-		clock.setFont(new Font("新細明體", Font.BOLD, 14));
-		clock.setBounds(268, 10, 138, 19);
-		panel_1.add(clock);
-		
-		Timer timer = new Timer(1000, e -> updateDateTime(clock));
 		
 		JButton btnNewButton_1_1 = new JButton("離開");
 		btnNewButton_1_1.addMouseListener(new MouseAdapter() {
